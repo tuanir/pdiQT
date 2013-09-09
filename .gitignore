@@ -4,3 +4,4 @@ Makefile
 *.jpg
 *.png
 *.un
+*.pro.user
