@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+      <item row="1" column="0">
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="resizeAnchor">
+         <enum>QGraphicsView::AnchorViewCenter</enum>
+        </property>
+        <property name="viewportUpdateMode">
+         <enum>QGraphicsView::FullViewportUpdate</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Arquivo</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSalvar"/>
+   </widget>
+   <widget class="QMenu" name="menuFiltros">
+    <property name="title">
+     <string>Filtros</string>
+    </property>
+    <addaction name="actionGaussiano"/>
+    <addaction name="actionLaplaciano"/>
+    <addaction name="actionMedia"/>
+    <addaction name="actionMediana"/>
+    <addaction name="actionTons_de_cinza"/>
+   </widget>
+   <widget class="QMenu" name="menuExibir">
+    <property name="title">
+     <string>Exibir</string>
+    </property>
+    <addaction name="actionHistograma"/>
+   </widget>
+   <widget class="QMenu" name="menuSegmenta_o">
+    <property name="title">
+     <string>Segmentação</string>
+    </property>
+    <addaction name="actionLimiarizacao"/>
+    <addaction name="actionLimiarizacao_automatica"/>
+    <addaction name="actionOtsu"/>
+    <addaction name="actionWatershed"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuExibir"/>
+   <addaction name="menuFiltros"/>
+   <addaction name="menuSegmenta_o"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionTons_de_cinza">
+   <property name="text">
+    <string>Tons de cinza</string>
+   </property>
+  </action>
+  <action name="actionGaussiano">
+   <property name="text">
+    <string>Gaussiano</string>
+   </property>
+  </action>
+  <action name="actionMedia">
+   <property name="text">
+    <string>Média</string>
+   </property>
+  </action>
+  <action name="actionMediana">
+   <property name="text">
+    <string>Mediana</string>
+   </property>
+  </action>
+  <action name="actionLaplaciano">
+   <property name="text">
+    <string>Laplaciano</string>
+   </property>
+  </action>
+  <action name="actionHistograma">
+   <property name="text">
+    <string>Histograma</string>
+   </property>
+  </action>
+  <action name="actionOtsu">
+   <property name="text">
+    <string>Otsu</string>
+   </property>
+  </action>
+  <action name="actionLimiarizacao">
+   <property name="text">
+    <string>Limiarização</string>
+   </property>
+  </action>
+  <action name="actionLimiarizacao_automatica">
+   <property name="text">
+    <string>Limiarização automática</string>
+   </property>
+  </action>
+  <action name="actionWatershed">
+   <property name="text">
+    <string>Watershed</string>
+   </property>
+  </action>
+  <action name="actionSalvar">
+   <property name="text">
+    <string>Salvar</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

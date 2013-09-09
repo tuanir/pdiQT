@@ -1,0 +1,6 @@
+*.exe
+*.o
+Makefile
+*.jpg
+*.png
+*.un
