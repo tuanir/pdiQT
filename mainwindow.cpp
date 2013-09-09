@@ -78,6 +78,7 @@ void MainWindow::ipl2QImage()
     item->setPixmap(QPixmap::fromImage(qt_img));
 }
 
+// Save an ipl to file
 void MainWindow::actionSalvar()
 {
 }
