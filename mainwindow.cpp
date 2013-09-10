@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QGraphicsPixmapItem>
 #include <QScrollBar>
+#include <QShortcut>
 
 using namespace cv;
 using namespace std;
@@ -14,8 +15,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QShortcut *shortcutOpen = new QShortcut(QKeySequence("Ctrl+O"),this);
+
     // Connect the signals with the slots
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openAction()));
+    QObject::connect(shortcutOpen, SIGNAL(activated()), this, SLOT(openAction()));
+
     connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(actionSalvar()));
     connect(ui->actionHistograma, SIGNAL(triggered()), this, SLOT(actionHistograma()));
     connect(ui->actionGaussiano, SIGNAL(triggered()), this, SLOT(actionGaussiano()));
