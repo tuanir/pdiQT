@@ -9,6 +9,8 @@
 #include <QImage>
 #include <QAction>
 #include <QFileDialog>
+#include <QGridLayout>
+#include <QSlider>
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +22,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    ~MainWindow();    
 
 private slots:
     void openAction();
@@ -36,8 +38,12 @@ private slots:
     void actionOtsu();
     void actionWatershed();
 
+    void setFilter(int i);
+    void applyFilter();
+
 private:
-    void ipl2QImage();
+    int currentFilter; //1 - gaussian
+    void ipl2QImage(cv::Mat image);
 
     Ui::MainWindow *ui;
 
@@ -50,6 +56,13 @@ private:
     cv::Mat cv_img;
     cv::Mat cv_img_tmp;
     QImage::Format format;
+
+    QWidget *widget;
+    QGridLayout *gridLayout;
+    QPushButton *ok;
+    QSlider *slider;
+
+
 };
 
 #endif // MAINWINDOW_H
