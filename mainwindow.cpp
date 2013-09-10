@@ -17,10 +17,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QShortcut *shortcutOpen = new QShortcut(QKeySequence("Ctrl+O"),this);
+    QShortcut *shortcutQuit = new QShortcut(QKeySequence("Ctrl+Q"),this);
 
     // Connect the signals with the slots
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openAction()));
     connect(shortcutOpen, SIGNAL(activated()), this, SLOT(openAction()));
+
+    connect(ui->actionSair, SIGNAL(triggered()), qApp, SLOT(quit()));
+    connect(shortcutQuit, SIGNAL(activated()), qApp, SLOT(quit()));
+
     connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(actionSalvar()));
     connect(ui->actionHistograma, SIGNAL(triggered()), this, SLOT(actionHistograma()));
     connect(ui->actionGaussiano, SIGNAL(triggered()), this, SLOT(actionGaussiano()));

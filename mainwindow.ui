@@ -49,6 +49,7 @@
     </property>
     <addaction name="actionOpen"/>
     <addaction name="actionSalvar"/>
+    <addaction name="actionSair"/>
    </widget>
    <widget class="QMenu" name="menuFiltros">
     <property name="title">
@@ -147,6 +148,11 @@
   <action name="actionSalvar">
    <property name="text">
     <string>Salvar</string>
+   </property>
+  </action>
+  <action name="actionSair">
+   <property name="text">
+    <string>Sair</string>
    </property>
   </action>
  </widget>
