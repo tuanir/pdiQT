@@ -8,6 +8,7 @@
 #include <qimage.h>
 #include <QImage>
 #include <QAction>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;
@@ -42,13 +43,13 @@ private:
 
     QGraphicsScene *scene;
     QGraphicsPixmapItem *item;
-    QString *fileName;
     QPixmap *image;
+    QString *fileName;
+    QString lastPath;
 
     cv::Mat cv_img;
     cv::Mat cv_img_tmp;
-    QImage::Format format;    
-
+    QImage::Format format;
 };
 
 #endif // MAINWINDOW_H

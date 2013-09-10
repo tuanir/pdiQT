@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QFileDialog>
 #include <QMessageBox>
 #include <QGraphicsPixmapItem>
 #include <QScrollBar>
@@ -36,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     format = QImage::Format_RGB888;
     cv_img = Mat();
     cv_img_tmp = Mat();
+    lastPath = "/home";
 
 }
 
@@ -47,7 +47,8 @@ MainWindow::~MainWindow()
 // Open an ipl image in the cv_img
 void MainWindow::openAction()
 {
-    *fileName = QFileDialog::getOpenFileName(this,"Open Image File",QDir::currentPath());
+    *fileName = QFileDialog::getOpenFileName(this,"Open Image File",lastPath);
+    lastPath = *fileName;
     if(!fileName->isEmpty())
     {
         //Open the image and check
@@ -108,7 +109,7 @@ void MainWindow::actionLaplaciano()
 
 void MainWindow::actionMediana()
 {
-    if(cv_img.data && format != QImage::Format_Indexed8)
+    if(cv_img.data)
     {
         medianBlur(cv_img, cv_img_tmp, 7);
         cv_img = cv_img_tmp.clone();
@@ -118,7 +119,7 @@ void MainWindow::actionMediana()
 
 void MainWindow::actionMedia()
 {
-    if(cv_img.data && format != QImage::Format_Indexed8)
+    if(cv_img.data)
     {
         blur(cv_img, cv_img_tmp, Size(7,7) );
         cv_img = cv_img_tmp.clone();
