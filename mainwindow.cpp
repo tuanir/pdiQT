@@ -5,6 +5,9 @@
 #include <QGraphicsPixmapItem>
 #include <QScrollBar>
 
+using namespace cv;
+using namespace std;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -30,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     fileName = new QString();
     format = QImage::Format_RGB888;
-    cv_img = NULL;
-    cv_img_tmp = NULL;
+    cv_img = Mat();
+    cv_img_tmp = Mat();
 
 }
 
@@ -47,15 +50,16 @@ void MainWindow::openAction()
     if(!fileName->isEmpty())
     {
         //Open the image and check
-        cv_img  = cvLoadImage(fileName->toStdString().c_str(), CV_LOAD_IMAGE_UNCHANGED);
-        if(!cv_img)
+        cv_img = imread(fileName->toStdString().c_str(), 1);//cv_img  = cvLoadImage(fileName->toStdString().c_str(), CV_LOAD_IMAGE_UNCHANGED);
+        if(!cv_img.data)
         {
             std::cout << "ERROR: cvLoadImage failed" << std::endl;
             exit(0);
         }
 
         // Create a temp image with the same size of the opened image
-        cv_img_tmp = cvCreateImage(cvGetSize(cv_img),cv_img->depth,1);
+        cv_img_tmp = cv_img.clone();//cv_img_tmp = cvCreateImage(cvGetSize(cv_img),cv_img->depth,1);
+
         //Set the RGB format
         format = QImage::Format_RGB888;
 
@@ -69,13 +73,16 @@ void MainWindow::openAction()
 // Convert the ipl cv_img to QImage
 void MainWindow::ipl2QImage()
 {
-    int height = cv_img->height;
-    int width = cv_img->width;
-    const uchar *qImageBuffer = (const uchar*)cv_img->imageData;
+    IplImage *ipl = new IplImage(cv_img);
+    int height = ipl->height;
+    int width = ipl->width;
+    const uchar *qImageBuffer = (const uchar*)ipl->imageData;
     QImage img(qImageBuffer, width, height, format);
     QImage qt_img = img.rgbSwapped();
 
     item->setPixmap(QPixmap::fromImage(qt_img));
+
+    delete ipl;
 }
 
 // Save an ipl to file
@@ -100,17 +107,25 @@ void MainWindow::actionLaplaciano()
 
 void MainWindow::actionMedia()
 {
+    if(cv_img.data && format != QImage::Format_Indexed8)
+    {
+        blur(cv_img, cv_img_tmp, Size(7,7) );
+        cv_img = cv_img_tmp.clone();
 
+        ipl2QImage();
+    }
 }
 
 void MainWindow::actionTons_de_cinza()
 {
-    if(cv_img && format != QImage::Format_Indexed8)
+    if(cv_img.data && format != QImage::Format_Indexed8)
     {
         // RGB2GRAY
-        cvCvtColor(cv_img,cv_img_tmp,CV_RGB2GRAY);
+        cvtColor(cv_img,cv_img_tmp,CV_RGB2GRAY);
+        cv_img = cv_img_tmp.clone();
+        blur(cv_img, cv_img_tmp, Size(7,7) );
         format = QImage::Format_Indexed8;
-        cv_img = cvCloneImage(cv_img_tmp);
+        cv_img = cv_img_tmp.clone();
 
         ipl2QImage();
     }

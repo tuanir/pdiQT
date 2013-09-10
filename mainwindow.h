@@ -43,8 +43,9 @@ private:
     QGraphicsPixmapItem *item;
     QString *fileName;
     QPixmap *image;
-    IplImage *cv_img;
-    IplImage *cv_img_tmp;
+
+    cv::Mat cv_img;
+    cv::Mat cv_img_tmp;
     QImage::Format format;    
 
 };
