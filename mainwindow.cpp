@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionGaussiano, SIGNAL(triggered()), this, SLOT(actionGaussiano()));
     connect(ui->actionLaplaciano, SIGNAL(triggered()), this, SLOT(actionLaplaciano()));
     connect(ui->actionMedia, SIGNAL(triggered()), this, SLOT(actionMedia()));
+    connect(ui->actionMediana, SIGNAL(triggered()), this, SLOT(actionMediana()));
     connect(ui->actionTons_de_cinza, SIGNAL(triggered()), this, SLOT(actionTons_de_cinza()));
     connect(ui->actionLimiarizacao, SIGNAL(triggered()), this, SLOT(actionLimiarizacao()));
     connect(ui->actionLimiarizacao_automatica, SIGNAL(triggered()), this, SLOT(actionLimiarizacao_automatica()));
@@ -105,13 +106,22 @@ void MainWindow::actionLaplaciano()
 
 }
 
+void MainWindow::actionMediana()
+{
+    if(cv_img.data && format != QImage::Format_Indexed8)
+    {
+        medianBlur(cv_img, cv_img_tmp, 7);
+        cv_img = cv_img_tmp.clone();
+        ipl2QImage();
+    }
+}
+
 void MainWindow::actionMedia()
 {
     if(cv_img.data && format != QImage::Format_Indexed8)
     {
         blur(cv_img, cv_img_tmp, Size(7,7) );
         cv_img = cv_img_tmp.clone();
-
         ipl2QImage();
     }
 }
@@ -122,8 +132,8 @@ void MainWindow::actionTons_de_cinza()
     {
         // RGB2GRAY
         cvtColor(cv_img,cv_img_tmp,CV_RGB2GRAY);
-        cv_img = cv_img_tmp.clone();
-        blur(cv_img, cv_img_tmp, Size(7,7) );
+        //cv_img = cv_img_tmp.clone();
+        //blur(cv_img, cv_img_tmp, Size(7,7) );
         format = QImage::Format_Indexed8;
         cv_img = cv_img_tmp.clone();
 

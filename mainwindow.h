@@ -27,6 +27,7 @@ private slots:
     void actionHistograma();
     void actionGaussiano();
     void actionLaplaciano();
+    void actionMediana();
     void actionMedia();
     void actionTons_de_cinza();
     void actionLimiarizacao();
