@@ -8,9 +8,8 @@ PdiQT is a simple UI program being built due to the Digital Image Processing dis
 [2]: http://opencv.org/
 [3]: http://qt-project.org/
 
-DEPS:
--------------
+### Dependencies
 
-*[ OpenCV 2.3][2]
+* [ OpenCV 2.3][2]
 
 * [Qt 5.1.1][3]
