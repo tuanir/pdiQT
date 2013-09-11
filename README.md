@@ -11,5 +11,6 @@ PdiQT is a simple UI program being built due to the Digital Image Processing dis
 DEPS:
 -------------
 
-[OpenCV 2.3][3]</br>
-[Qt 5.1.1][3]
+*[ OpenCV 2.3][2]
+
+* [Qt 5.1.1][3]
