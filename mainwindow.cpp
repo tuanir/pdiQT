@@ -62,8 +62,12 @@ MainWindow::MainWindow(QWidget *parent) :
     gridLayout->addWidget(slider);
     gridLayout->addWidget(ok);
     widget->setLayout(gridLayout);
+    widget->setWindowTitle("Parâmetro");
     connect(slider, SIGNAL(valueChanged(int)),this, SLOT(setFilter(int)));
     connect(ok, SIGNAL(clicked()), this, SLOT(applyFilter()));
+
+    // Main Window settings
+    this->setWindowTitle("PDI");
 }
 
 MainWindow::~MainWindow()
@@ -144,7 +148,7 @@ void MainWindow::actionMediana()
 {
     currentFilter = 1;
     if(cv_img.data)
-    {
+    {        
         slider->setValue(1);
         widget->show();
     }
@@ -154,7 +158,7 @@ void MainWindow::actionMedia()
 {
     currentFilter = 2;
     if(cv_img.data)
-    {
+    {        
         slider->setValue(1);
         widget->show();
     }
