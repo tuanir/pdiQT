@@ -198,18 +198,18 @@ void MainWindow::actionWatershed()
 void MainWindow::setFilter(int i)
 {
     int odd = 2*i+1;
-    //switch(currentFilter)
-    //{
-    if (currentFilter == 1)
-        //case 1:
-        medianBlur(cv_img, cv_img_tmp, odd);
-    if (currentFilter == 2)
-        //case 2:
-        blur(cv_img, cv_img_tmp, Size(i,i) );
-    if(currentFilter == 3)
-        //case 3:
-        GaussianBlur(cv_img, cv_img_tmp, Size(odd,odd), 10, 10);
-    //}
+    switch(currentFilter)
+    {
+        case 1:
+            medianBlur(cv_img, cv_img_tmp, odd);
+            break;
+        case 2:
+            blur(cv_img, cv_img_tmp, Size(i,i) );
+            break;
+        case 3:
+            GaussianBlur(cv_img, cv_img_tmp, Size(odd,odd), 10, 10);
+            break;
+    }
     ipl2QImage(cv_img_tmp);
 }
 
