@@ -42,7 +42,7 @@ private slots:
     void applyFilter();
 
 private:
-    int currentFilter; //1 - gaussian
+    int currentFilter; //1 - median, 2 - normalized box filter (media), 3 - Gaussian
     void ipl2QImage(cv::Mat image);
 
     Ui::MainWindow *ui;

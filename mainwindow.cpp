@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QShortcut *shortcutQuit = new QShortcut(QKeySequence("Ctrl+Q"),this);
 
     // Connect the signals with the slots
+
     connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(openAction()));
     connect(shortcutOpen, SIGNAL(activated()), this, SLOT(openAction()));
 
@@ -49,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // File path and last opened folder path
     fileName = new QString();
-    lastPath = "/home";
+    lastPath = "~";
 
     // PopUp settings
     widget = new QWidget;
@@ -81,7 +82,7 @@ void MainWindow::openAction()
         cv_img = imread(fileName->toStdString().c_str(), 1);//cv_img  = cvLoadImage(fileName->toStdString().c_str(), CV_LOAD_IMAGE_UNCHANGED);
         if(!cv_img.data)
         {
-            std::cout << "ERROR: cvLoadImage failed" << std::endl;
+            std::cout << "ERROR: imread failed" << std::endl;
             exit(0);
         }
 
@@ -116,6 +117,7 @@ void MainWindow::ipl2QImage(Mat image)
 // Save an ipl to file
 void MainWindow::actionSalvar()
 {
+
 }
 
 void MainWindow::actionHistograma()
@@ -125,7 +127,7 @@ void MainWindow::actionHistograma()
 
 void MainWindow::actionGaussiano()
 {
-    currentFilter = 1;
+    currentFilter = 3;
     if(cv_img.data)
     {
         slider->setValue(1);
@@ -140,21 +142,21 @@ void MainWindow::actionLaplaciano()
 
 void MainWindow::actionMediana()
 {
+    currentFilter = 1;
     if(cv_img.data)
     {
-        medianBlur(cv_img, cv_img_tmp, 7);
-        cv_img = cv_img_tmp.clone();
-        ipl2QImage(cv_img);
+        slider->setValue(1);
+        widget->show();
     }
 }
 
 void MainWindow::actionMedia()
 {
+    currentFilter = 2;
     if(cv_img.data)
     {
-        blur(cv_img, cv_img_tmp, Size(7,7) );
-        cv_img = cv_img_tmp.clone();
-        ipl2QImage(cv_img);
+        slider->setValue(1);
+        widget->show();
     }
 }
 
@@ -195,9 +197,19 @@ void MainWindow::actionWatershed()
 
 void MainWindow::setFilter(int i)
 {
+    int odd = 2*i+1;
+    //switch(currentFilter)
+    //{
     if (currentFilter == 1)
+        //case 1:
+        medianBlur(cv_img, cv_img_tmp, odd);
+    if (currentFilter == 2)
+        //case 2:
         blur(cv_img, cv_img_tmp, Size(i,i) );
-
+    if(currentFilter == 3)
+        //case 3:
+        GaussianBlur(cv_img, cv_img_tmp, Size(odd,odd), 10, 10);
+    //}
     ipl2QImage(cv_img_tmp);
 }
 
