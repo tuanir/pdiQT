@@ -94,6 +94,9 @@
    <property name="text">
     <string>Abrir</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionTons_de_cinza">
    <property name="text">
@@ -153,6 +156,9 @@
   <action name="actionSair">
    <property name="text">
     <string>Sair</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
