@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ok = new QPushButton("Ok");
     slider = new QSlider(Qt::Horizontal);
     slider->setMinimum(1);
-    slider->setMaximum(10);
+    slider->setMaximum(30);
     gridLayout->addWidget(slider);
     gridLayout->addWidget(ok);
     widget->setLayout(gridLayout);
@@ -181,22 +181,46 @@ void MainWindow::actionTons_de_cinza()
 
 void MainWindow::actionLimiarizacao()
 {
+    if(cv_img.data)
+    {
+        actionTons_de_cinza();
+        threshold(cv_img, cv_img_tmp, 128, 255, THRESH_BINARY);
+        cv_img = cv_img_tmp.clone();
 
+        ipl2QImage(cv_img);
+    }
 }
 
 void MainWindow::actionLimiarizacao_automatica()
 {
+    if(cv_img.data)
+    {
+        actionTons_de_cinza();
+        adaptiveThreshold(cv_img, cv_img_tmp, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY, 15, 1);
+        cv_img = cv_img_tmp.clone();
 
+        ipl2QImage(cv_img);
+    }
 }
 
 void MainWindow::actionOtsu()
 {
+    if(cv_img.data)
+    {
+        actionTons_de_cinza();
+        threshold(cv_img, cv_img_tmp, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+        cv_img = cv_img_tmp.clone();
 
+        ipl2QImage(cv_img);
+    }
 }
 
 void MainWindow::actionWatershed()
 {
+    if(cv_img.data)
+    {
 
+    }
 }
 
 void MainWindow::setFilter(int i)
