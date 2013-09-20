@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // File path and last opened folder path
     fileName = new QString();
-    lastPath = "~";
+    lastPath = getenv("HOME");
 
     // PopUp settings
     widget = new QWidget;
@@ -142,6 +142,28 @@ void MainWindow::actionGaussiano()
 void MainWindow::actionLaplaciano()
 {
 
+    int kernel_size = 3;
+    int scale = 1;
+    int delta = 0;
+    int ddepth = CV_16S;
+
+    /// Remove noise by blurring with a Gaussian filter
+
+    GaussianBlur( cv_img, cv_img_tmp, Size(3,3), 0, 0, BORDER_DEFAULT );
+    cv_img = cv_img_tmp.clone();
+
+    /// Convert the image to grayscale
+    actionTons_de_cinza();
+
+    /// Apply Laplace function
+    Laplacian( cv_img, cv_img_tmp, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
+
+    cv_img = cv_img_tmp.clone();
+
+    convertScaleAbs( cv_img, cv_img_tmp );
+    cv_img = cv_img_tmp.clone();
+
+    ipl2QImage(cv_img);
 }
 
 void MainWindow::actionMediana()
