@@ -95,7 +95,7 @@
     <string>Abrir</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+C</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionTons_de_cinza">
