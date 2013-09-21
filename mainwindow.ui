@@ -95,7 +95,7 @@
     <string>Abrir</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+O</string>
+    <string>Ctrl+C</string>
    </property>
   </action>
   <action name="actionTons_de_cinza">
@@ -151,6 +151,9 @@
   <action name="actionSalvar">
    <property name="text">
     <string>Salvar</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSair">

@@ -120,7 +120,22 @@ void MainWindow::ipl2QImage(Mat image)
 
 // Save an ipl to file
 void MainWindow::actionSalvar()
-{
+{    
+    QString savePath = QFileDialog::getSaveFileName(this,"Save Image File", *fileName, tr("Images (*.png *.jpg)"));
+    if (cv_img.data)
+    {
+        vector<int> compression_params;
+        compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+        compression_params.push_back(0);
+        try
+        {
+            imwrite(savePath.toStdString(), cv_img, compression_params);
+        } catch (runtime_error& ex)
+        {
+            fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
+            return;
+        }
+    }
 
 }
 
