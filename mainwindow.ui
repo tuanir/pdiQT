@@ -76,7 +76,15 @@
     <addaction name="actionOtsu"/>
     <addaction name="actionWatershed"/>
    </widget>
+   <widget class="QMenu" name="menuEditar">
+    <property name="title">
+     <string>Editar</string>
+    </property>
+    <addaction name="actionDesfazer"/>
+    <addaction name="actionRefazer"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEditar"/>
    <addaction name="menuExibir"/>
    <addaction name="menuFiltros"/>
    <addaction name="menuSegmenta_o"/>
@@ -162,6 +170,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionDesfazer">
+   <property name="text">
+    <string>Desfazer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRefazer">
+   <property name="text">
+    <string>Refazer</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
    </property>
   </action>
  </widget>

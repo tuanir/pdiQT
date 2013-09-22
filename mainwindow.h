@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QGridLayout>
 #include <QSlider>
+#include <list>
 
 namespace Ui {
 class MainWindow;
@@ -41,6 +42,10 @@ private slots:
     void setFilter(int i);
     void applyFilter();
 
+    void historyAdd();
+    void undo();
+    void redo();
+
 private:
     int currentFilter; //1 - median, 2 - normalized box filter (media), 3 - Gaussian
     void ipl2QImage(cv::Mat image);
@@ -61,6 +66,10 @@ private:
     QGridLayout *gridLayout;
     QPushButton *ok;
     QSlider *slider;
+
+    std::list<std::pair<cv::Mat,QImage::Format> > history;
+    std::list<std::pair<cv::Mat,QImage::Format> >::iterator currentHistory;
+    unsigned int HISTORY_MAX_SIZE;
 
 
 };

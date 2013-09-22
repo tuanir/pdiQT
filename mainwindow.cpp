@@ -27,6 +27,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSair, SIGNAL(triggered()), qApp, SLOT(quit()));
     //connect(shortcutQuit, SIGNAL(activated()), qApp, SLOT(quit()));
 
+    connect(ui->actionDesfazer, SIGNAL(triggered()), this, SLOT(undo()));
+    connect(ui->actionRefazer, SIGNAL(triggered()), this, SLOT(redo()));
+
     connect(ui->actionSalvar, SIGNAL(triggered()), this, SLOT(actionSalvar()));
     connect(ui->actionHistograma, SIGNAL(triggered()), this, SLOT(actionHistograma()));
     connect(ui->actionGaussiano, SIGNAL(triggered()), this, SLOT(actionGaussiano()));
@@ -68,6 +71,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Main Window settings
     this->setWindowTitle("PDI");
+
+    // History settings
+    currentHistory = history.begin();
+    HISTORY_MAX_SIZE = 20;
 }
 
 MainWindow::~MainWindow()
@@ -100,6 +107,7 @@ void MainWindow::openAction()
         ipl2QImage(cv_img);
         ui->graphicsView->setSceneRect(scene->itemsBoundingRect());
         ui->graphicsView->show();
+        historyAdd();
     }
 }
 
@@ -179,6 +187,7 @@ void MainWindow::actionLaplaciano()
     cv_img = cv_img_tmp.clone();
 
     ipl2QImage(cv_img);
+    historyAdd();
 }
 
 void MainWindow::actionMediana()
@@ -213,6 +222,7 @@ void MainWindow::actionTons_de_cinza()
         cv_img = cv_img_tmp.clone();
 
         ipl2QImage(cv_img);
+        historyAdd();
     }
 }
 
@@ -225,6 +235,7 @@ void MainWindow::actionLimiarizacao()
         cv_img = cv_img_tmp.clone();
 
         ipl2QImage(cv_img);
+        historyAdd();
     }
 }
 
@@ -237,6 +248,7 @@ void MainWindow::actionLimiarizacao_automatica()
         cv_img = cv_img_tmp.clone();
 
         ipl2QImage(cv_img);
+        historyAdd();
     }
 }
 
@@ -249,6 +261,7 @@ void MainWindow::actionOtsu()
         cv_img = cv_img_tmp.clone();
 
         ipl2QImage(cv_img);
+        historyAdd();
     }
 }
 
@@ -273,6 +286,7 @@ void MainWindow::actionWatershed()
         cv_img = markers.clone();
         format = QImage::Format_Indexed8;
         ipl2QImage(cv_img);
+        historyAdd();
     }
 }
 
@@ -290,7 +304,7 @@ void MainWindow::setFilter(int i)
         case 3:
             GaussianBlur(cv_img, cv_img_tmp, Size(odd,odd), 10, 10);
             break;
-    }
+    }    
     ipl2QImage(cv_img_tmp);
 }
 
@@ -298,4 +312,34 @@ void MainWindow::applyFilter()
 {
     cv_img = cv_img_tmp.clone();
     widget->close();
+    historyAdd();
+}
+
+void MainWindow::historyAdd()
+{
+    if (history.size() >= HISTORY_MAX_SIZE)
+        history.pop_front();
+    history.push_back(make_pair(cv_img,format));
+    currentHistory = history.end();
+    --currentHistory;
+}
+
+void MainWindow::undo()
+{
+    if (currentHistory != history.begin())
+        --currentHistory;
+    cv_img = (*currentHistory).first;
+    format = (*currentHistory).second;
+    ipl2QImage(cv_img);
+}
+
+void MainWindow::redo()
+{
+    if (currentHistory != history.end())
+        ++currentHistory;
+    else
+        --currentHistory;
+    cv_img = (*currentHistory).first;
+    format = (*currentHistory).second;
+    ipl2QImage(cv_img);
 }
