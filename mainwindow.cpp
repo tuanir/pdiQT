@@ -256,7 +256,23 @@ void MainWindow::actionWatershed()
 {
     if(cv_img.data)
     {
+        Mat gray, otsu, eroded, dilated, bg;
 
+        cvtColor(cv_img,gray,CV_RGB2GRAY);
+        threshold(gray, otsu, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
+        erode(otsu, eroded, cv::Mat(), cv::Point(-1,-1), 2);
+        dilate(otsu, dilated, cv::Mat(), cv::Point(-1,-1), 3);
+        threshold(dilated,bg,1,128,cv::THRESH_BINARY_INV);
+
+        Mat markers(otsu.size(),CV_8U,cv::Scalar(0));
+        markers = eroded + bg;
+        markers.convertTo(markers, CV_32S);
+        watershed(cv_img, markers);
+        markers.convertTo(markers,CV_8U);
+
+        cv_img = markers.clone();
+        format = QImage::Format_Indexed8;
+        ipl2QImage(cv_img);
     }
 }
 
