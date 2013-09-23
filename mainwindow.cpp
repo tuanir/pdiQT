@@ -326,21 +326,26 @@ void MainWindow::historyAdd()
 
 void MainWindow::undo()
 {
-    if (currentHistory != history.begin())
-        --currentHistory;
-    cv_img = (*currentHistory).first;
-    format = (*currentHistory).second;
-    ipl2QImage(cv_img);
+    if(cv_img.data)
+    {
+        if (currentHistory != history.begin())
+            --currentHistory;
+        cv_img = (*currentHistory).first;
+        format = (*currentHistory).second;
+        ipl2QImage(cv_img);
+    }
 }
 
 void MainWindow::redo()
 {
-
-    if (currentHistory != history.end())
-        ++currentHistory;
-    if (currentHistory == history.end())
-        --currentHistory;
-    cv_img = (*currentHistory).first;
-    format = (*currentHistory).second;
-    ipl2QImage(cv_img);
+    if(cv_img.data)
+    {
+        if (currentHistory != history.end())
+            ++currentHistory;
+        if (currentHistory == history.end())
+            --currentHistory;
+        cv_img = (*currentHistory).first;
+        format = (*currentHistory).second;
+        ipl2QImage(cv_img);
+    }
 }
