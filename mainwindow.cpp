@@ -335,9 +335,10 @@ void MainWindow::undo()
 
 void MainWindow::redo()
 {
+
     if (currentHistory != history.end())
         ++currentHistory;
-    else
+    if (currentHistory == history.end())
         --currentHistory;
     cv_img = (*currentHistory).first;
     format = (*currentHistory).second;

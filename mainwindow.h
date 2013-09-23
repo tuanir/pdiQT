@@ -41,6 +41,7 @@ private slots:
 
     void setFilter(int i);
     void applyFilter();
+    //void closeFilter();
 
     void historyAdd();
     void undo();
