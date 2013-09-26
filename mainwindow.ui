@@ -83,11 +83,18 @@
     <addaction name="actionDesfazer"/>
     <addaction name="actionRefazer"/>
    </widget>
+   <widget class="QMenu" name="menuBolhas">
+    <property name="title">
+     <string>Objects</string>
+    </property>
+    <addaction name="actionDetect_Circles"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEditar"/>
    <addaction name="menuExibir"/>
    <addaction name="menuFiltros"/>
    <addaction name="menuSegmenta_o"/>
+   <addaction name="menuBolhas"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -186,6 +193,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionDetect_Circles">
+   <property name="text">
+    <string>Detect Circles</string>
    </property>
   </action>
  </widget>

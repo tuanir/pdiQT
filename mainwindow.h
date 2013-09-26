@@ -38,6 +38,7 @@ private slots:
     void actionLimiarizacao_automatica();
     void actionOtsu();
     void actionWatershed();
+    void actionDetect_Circles();
 
     void setFilter(int i);
     void applyFilter();

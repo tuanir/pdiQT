@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionLimiarizacao_automatica, SIGNAL(triggered()), this, SLOT(actionLimiarizacao_automatica()));
     connect(ui->actionOtsu, SIGNAL(triggered()), this, SLOT(actionOtsu()));
     connect(ui->actionWatershed, SIGNAL(triggered()), this, SLOT(actionWatershed()));
+    connect(ui->actionDetect_Circles, SIGNAL(triggered()),this,SLOT(actionDetect_Circles()));
 
     // Image settings
     scene = new QGraphicsScene(this);
@@ -149,7 +150,7 @@ void MainWindow::actionSalvar()
 
 void MainWindow::actionHistograma()
 {
-
+        //TODO
 }
 
 void MainWindow::actionGaussiano()
@@ -162,32 +163,68 @@ void MainWindow::actionGaussiano()
     }
 }
 
+void MainWindow::actionDetect_Circles()
+{
+    if(cv_img.data)
+    {
+        //convert it to gray
+        actionTons_de_cinza();
+
+        GaussianBlur(cv_img, cv_img_tmp, Size(9,9), 2, 2);
+        cv_img = cv_img_tmp.clone();
+
+        vector<Vec3f> circles;
+
+        HoughCircles(cv_img, circles, CV_HOUGH_GRADIENT, 1, cv_img.rows/8, 200, 100, 0, 0);
+
+        // Draw the circles
+
+        for(size_t i = 0; i < circles.size(); i++)
+        {
+            Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
+            int radius = cvRound(circles[i][2]);
+
+            //circle center
+            circle(cv_img, center, 3, Scalar(0,255,0), -1, 8, 0);
+
+            //circle outline
+            circle(cv_img, center, radius, Scalar(0,0,255), 3, 8, 0);
+        }
+
+        ipl2QImage(cv_img);
+        cout << circles.size() << endl;
+        historyAdd();
+    }
+}
+
 void MainWindow::actionLaplaciano()
 {
+    if(cv_img.data)
+    {
+        int kernel_size = 3;
+        int scale = 1;
+        int delta = 0;
+        int ddepth = CV_16S;
 
-    int kernel_size = 3;
-    int scale = 1;
-    int delta = 0;
-    int ddepth = CV_16S;
+        /// Remove noise by blurring with a Gaussian filter
 
-    /// Remove noise by blurring with a Gaussian filter
+        GaussianBlur( cv_img, cv_img_tmp, Size(3,3), 0, 0, BORDER_DEFAULT );
+        cv_img = cv_img_tmp.clone();
 
-    GaussianBlur( cv_img, cv_img_tmp, Size(3,3), 0, 0, BORDER_DEFAULT );
-    cv_img = cv_img_tmp.clone();
+        /// Convert the image to grayscale
+        actionTons_de_cinza();
 
-    /// Convert the image to grayscale
-    actionTons_de_cinza();
+        /// Apply Laplace function
+        Laplacian( cv_img, cv_img_tmp, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
 
-    /// Apply Laplace function
-    Laplacian( cv_img, cv_img_tmp, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
+        cv_img = cv_img_tmp.clone();
 
-    cv_img = cv_img_tmp.clone();
+        convertScaleAbs( cv_img, cv_img_tmp );
+        cv_img = cv_img_tmp.clone();
 
-    convertScaleAbs( cv_img, cv_img_tmp );
-    cv_img = cv_img_tmp.clone();
-
-    ipl2QImage(cv_img);
-    historyAdd();
+        ipl2QImage(cv_img);
+        historyAdd();
+    }
 }
 
 void MainWindow::actionMediana()
