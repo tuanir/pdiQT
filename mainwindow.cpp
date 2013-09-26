@@ -71,7 +71,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ok, SIGNAL(clicked()), this, SLOT(applyFilter()));
 
     circleDetectionPopup = new QWidget;
+    gridLayout2 = new QGridLayout();
+    ballsCount = new QLineEdit();
     circleDetectionPopup->setWindowTitle("Number of circles in the image");
+    gridLayout2->addWidget(ballsCount);
+    circleDetectionPopup->setLayout(gridLayout2);
+    ballsCount->setReadOnly(true);
 
 
     // Main Window settings
@@ -196,6 +201,7 @@ void MainWindow::actionDetect_Circles()
         }
 
         ipl2QImage(cv_img);
+        ballsCount->setText(toString(circles.size()).c_str());
         circleDetectionPopup->show();
         cout << circles.size() << endl;
         historyAdd();
@@ -390,4 +396,11 @@ void MainWindow::redo()
         format = (*currentHistory).second;
         ipl2QImage(cv_img);
     }
+}
+
+string MainWindow::toString(int a)
+{
+    stringstream ss;
+    ss << a;
+    return ss.str();
 }

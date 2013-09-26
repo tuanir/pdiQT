@@ -12,6 +12,9 @@
 #include <QGridLayout>
 #include <QSlider>
 #include <list>
+#include <QLineEdit>
+#include <sstream>
+#include <string>
 
 namespace Ui {
 class MainWindow;
@@ -43,6 +46,7 @@ private slots:
     void setFilter(int i);
     void applyFilter();
     //void closeFilter();
+    std::string toString(int a);
 
     void historyAdd();
     void undo();
@@ -67,8 +71,10 @@ private:
     QWidget *widget;
     QWidget *circleDetectionPopup;
     QGridLayout *gridLayout;
+    QGridLayout *gridLayout2;
     QPushButton *ok;
     QSlider *slider;
+    QLineEdit * ballsCount;
 
     std::list<std::pair<cv::Mat,QImage::Format> > history;
     std::list<std::pair<cv::Mat,QImage::Format> >::iterator currentHistory;
