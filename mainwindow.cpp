@@ -70,6 +70,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(slider, SIGNAL(valueChanged(int)),this, SLOT(setFilter(int)));
     connect(ok, SIGNAL(clicked()), this, SLOT(applyFilter()));
 
+    circleDetectionPopup = new QWidget;
+    circleDetectionPopup->setWindowTitle("Number of circles in the image");
+
+
     // Main Window settings
     this->setWindowTitle("PDI");
 
@@ -192,6 +196,7 @@ void MainWindow::actionDetect_Circles()
         }
 
         ipl2QImage(cv_img);
+        circleDetectionPopup->show();
         cout << circles.size() << endl;
         historyAdd();
     }

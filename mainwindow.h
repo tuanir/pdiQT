@@ -65,6 +65,7 @@ private:
     QImage::Format format;
 
     QWidget *widget;
+    QWidget *circleDetectionPopup;
     QGridLayout *gridLayout;
     QPushButton *ok;
     QSlider *slider;
