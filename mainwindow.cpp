@@ -117,6 +117,7 @@ void MainWindow::openAction()
         ipl2QImage(cv_img);
         ui->graphicsView->setSceneRect(scene->itemsBoundingRect());
         ui->graphicsView->show();
+        history.clear();
         historyAdd();
     }
 }
@@ -202,8 +203,7 @@ void MainWindow::actionDetect_Circles()
 
         ipl2QImage(cv_img);
         ballsCount->setText(toString(circles.size()).c_str());
-        circleDetectionPopup->show();
-        cout << circles.size() << endl;
+        circleDetectionPopup->show();        
         historyAdd();
     }
 }
